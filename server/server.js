@@ -1,6 +1,7 @@
 require("dotenv").config();
 const mongoose = require("mongoose");
 const { ApolloServer } = require("apollo-server");
+const { findOrCreateUser } = require("./controllers/userControler");
 
 const typeDefs = require("./typeDefs");
 const resolvers = require("./resolvers");
@@ -22,6 +23,7 @@ const server = new ApolloServer({
       authToken = req.headers.authorization;
       if (authToken) {
         //find and create user
+        findOrCreateUser(authToken);
       }
     } catch (error) {
       console.error(`Unable to authentificate user with token ${authToken}`);
