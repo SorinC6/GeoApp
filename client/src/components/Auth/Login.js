@@ -19,11 +19,12 @@ const ME_Query = `
 const Login = ({ classes }) => {
   const onSuccess = async googleUser => {
     const idToken = googleUser.getAuthResponse().id_token;
-    console.log(idToken);
+    //console.log(idToken);
     const client = new GraphQLClient("http://localhost:4000/graphql", {
       headers: { authorization: idToken }
     });
     const data = await client.request(ME_Query);
+    debugger;
     console.log(data);
   };
   const responseFacebook = response => {

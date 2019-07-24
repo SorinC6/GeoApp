@@ -3,14 +3,15 @@ const { OAuth2Client } = require("google-auth-library");
 
 const client = new OAuth2Client(process.env.API_URL_GOOGLE);
 
-const findOrCreateUser = async token => {
+exports.findOrCreateUser = async token => {
   const googleUser = await verifiyAuthToken(token);
   const user = await checkIfUserExists(googleUser.email);
-
-  return user ? user :
+  console.log(user);
+  return user ? user : createNewUser(googleUser);
+  //return createNewUser(googleUser);
 };
 
-verifiyAuthToken = async token => {
+const verifiyAuthToken = async token => {
   try {
     const ticket = await client.verifyIdToken({
       idToken: token,
@@ -22,8 +23,15 @@ verifiyAuthToken = async token => {
   }
 };
 
-checkIfUserExists = async email => await User.findOne({ email }).exec();
+const checkIfUserExists = async email => {
+  try {
+    const u = await User.findOne({ email }).exec();
+    return u;
+  } catch (error) {}
+};
 
-
-
-exports.exports = findOrCreateUser;
+const createNewUser = googleUser => {
+  const { name, email, picture } = googleUser;
+  const user = { name, email, picture };
+  return new User(user).save();
+};
