@@ -24,7 +24,7 @@ const Login = ({ classes }) => {
       headers: { authorization: idToken }
     });
     const data = await client.request(ME_Query);
-    debugger;
+    //debugger;
     console.log(data);
   };
   const responseFacebook = response => {
