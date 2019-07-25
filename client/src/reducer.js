@@ -1,6 +1,7 @@
-export default (reducer = (state, action) => {
+export default function reducer(state, action) {
   switch (action.type) {
     case "LOGIN_USER":
+      debugger;
       return {
         ...state,
         currentUser: action.payload
@@ -8,4 +9,4 @@ export default (reducer = (state, action) => {
     default:
       return state;
   }
-});
+}

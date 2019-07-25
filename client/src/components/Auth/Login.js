@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { GoogleLogin } from "react-google-login";
 import FacebookLogin from "react-facebook-login";
 import { GraphQLClient } from "graphql-request";
 // import Typography from "@material-ui/core/Typography";
+import Context from "../../context";
 
 const ME_Query = `
 {
@@ -17,6 +18,7 @@ const ME_Query = `
 `;
 
 const Login = ({ classes }) => {
+  const { dispatch } = useContext(Context);
   const onSuccess = async googleUser => {
     const idToken = googleUser.getAuthResponse().id_token;
     //console.log(idToken);
@@ -24,8 +26,7 @@ const Login = ({ classes }) => {
       headers: { authorization: idToken }
     });
     const data = await client.request(ME_Query);
-    //debugger;
-    console.log(data);
+    dispatch({ type: "LOGIN_USER", payload: data.me });
   };
   const responseFacebook = response => {
     console.log(response);
