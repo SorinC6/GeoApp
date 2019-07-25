@@ -6,7 +6,7 @@ const client = new OAuth2Client(process.env.API_URL_GOOGLE);
 exports.findOrCreateUser = async token => {
   const googleUser = await verifiyAuthToken(token);
   const user = await checkIfUserExists(googleUser.email);
-  console.log(user);
+  //console.log(user);
   return user ? user : createNewUser(googleUser);
   //return createNewUser(googleUser);
 };
