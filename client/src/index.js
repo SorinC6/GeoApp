@@ -13,7 +13,7 @@ import * as serviceWorker from "./serviceWorker";
 const Root = () => {
   const initialState = useContext(Context);
   const [state, dispatch] = useReducer(reducer, initialState);
-  console.log("State:", state);
+  //console.log("State:", state);
 
   return (
     <Router>

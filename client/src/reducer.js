@@ -1,10 +1,9 @@
-export default function reducer(state, action) {
-  switch (action.type) {
+export default function reducer(state, { type, payload }) {
+  switch (type) {
     case "LOGIN_USER":
-      debugger;
       return {
         ...state,
-        currentUser: action.payload
+        currentUser: payload
       };
     default:
       return state;
