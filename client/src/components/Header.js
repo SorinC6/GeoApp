@@ -5,6 +5,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Map from "@material-ui/icons/Map";
 import Typography from "@material-ui/core/Typography";
+import Signout from "../components/Auth/Signout";
 
 const Header = ({ classes }) => {
   const { state } = useContext(Context);
@@ -33,6 +34,7 @@ const Header = ({ classes }) => {
             </div>
           )}
           {/* Signout Button */}
+          <Signout />
         </Toolbar>
       </AppBar>
     </div>
