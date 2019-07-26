@@ -48,6 +48,7 @@ const Login = ({ classes }) => {
         onSuccess={onSuccess}
         isSignedIn={true}
         onFailure={onFailure}
+        buttonText="Login with Google"
       />
       {/* <FacebookLogin
         appId="506464763425499"
