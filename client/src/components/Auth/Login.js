@@ -9,6 +9,7 @@ import { ME_Query } from "../../graphql/queries";
 
 const Login = ({ classes }) => {
   const { dispatch } = useContext(Context);
+
   const onSuccess = async googleUser => {
     try {
       const idToken = googleUser.getAuthResponse().id_token;
@@ -17,13 +18,14 @@ const Login = ({ classes }) => {
       });
       const { me } = await client.request(ME_Query);
       dispatch({ type: "LOGIN_USER", payload: me });
+      dispatch({ type: "IS_LOGGED_IN", payload: googleUser.isSignedIn() });
     } catch (err) {
       onFailure(err);
     }
   };
 
   const onFailure = err => {
-    console.err("Error: ", err);
+    console.log("Error: ", err);
   };
 
   // const responseFacebook = response => {
