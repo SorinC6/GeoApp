@@ -50,6 +50,9 @@ const Map = ({ classes }) => {
     if (!state.draft) {
       dispatch({ type: "CREATE_DRAFT" });
     }
+    console.log(lngLat);
+    const [longitude, latitude] = lngLat;
+    dispatch({ type: "UPDATE_PIN_LOCATION", payload: { longitude, latitude } });
   };
 
   return (
@@ -76,6 +79,18 @@ const Map = ({ classes }) => {
             offsetTop={-37}
           >
             <PinIcon size={40} color="red" />
+          </Marker>
+        )}
+
+        {/* Draft Pin */}
+        {state.draft && (
+          <Marker
+            latitude={state.draft.latitude}
+            longitude={state.draft.longitude}
+            offsetLeft={-19}
+            offsetTop={-37}
+          >
+            <PinIcon size={40} color="blue" />
           </Marker>
         )}
       </ReactMapGL>

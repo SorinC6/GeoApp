@@ -20,9 +20,15 @@ export default function reducer(state, { type, payload }) {
       return {
         ...state,
         draft: {
-          latitude: 0,
-          longitude: 0
+          longitude: 0,
+          latitude: 0
         }
+      };
+    case "UPDATE_PIN_LOCATION":
+      console.log("Reducer: ", payload);
+      return {
+        ...state,
+        draft: payload
       };
     default:
       return state;
