@@ -13,12 +13,15 @@ import SaveIcon from "@material-ui/icons/SaveTwoTone";
 import { CREATE_PIN_MUTATION } from "../../graphql/mutations";
 import { GraphQLClient } from "graphql-request";
 
+import { BASE_URL, useClient } from "../../clientQl";
+
 const CreatePin = ({ classes }) => {
   const { state, dispatch } = useContext(Context);
   const [title, setTitle] = useState("");
   const [image, setImage] = useState("");
   const [content, setContent] = useState("");
   const [submiting, setSumbmiting] = useState(false);
+  const client = useClient();
 
   const handleImageUpload = async () => {
     const data = new FormData();
@@ -36,13 +39,6 @@ const CreatePin = ({ classes }) => {
     try {
       e.preventDefault();
       setSumbmiting(true);
-      const idToken = window.gapi.auth2
-        .getAuthInstance()
-        .currentUser.get()
-        .getAuthResponse().id_token;
-      const client = new GraphQLClient("http://localhost:4000/graphql", {
-        headers: { authorization: idToken }
-      });
       const url = await handleImageUpload();
       const { latitude, longitude } = state.draft;
       const variables = { title, image: url, content, longitude, latitude };
