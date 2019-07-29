@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import Context from "../context";
 import { withStyles } from "@material-ui/core/styles";
 import ReactMapGL, { NavigationControl, Marker } from "react-map-gl";
 import PinIcon from "./PinIcon";
@@ -16,6 +17,7 @@ const INITIAL_VIEWPORT = {
 const Map = ({ classes }) => {
   const [viewport, setViewport] = useState(INITIAL_VIEWPORT);
   const [userPosition, setUserPosition] = useState(null);
+  const { state, dispatch } = useContext(Context);
 
   useEffect(() => {
     getUserPosition();
@@ -25,13 +27,12 @@ const Map = ({ classes }) => {
 
   const getUserPosition = () => {
     if ("geolocation" in navigator) {
-      console.log("yes geolocation"); // logs 'yes geolocation' to the console
+      //console.log("yes geolocation"); // logs 'yes geolocation' to the console
       navigator.geolocation.getCurrentPosition(
         position => {
-          debugger;
           const { latitude, longitude } = position.coords;
-          console.log("lat", latitude); // this is not logging anything to the console
-          console.log(longitude); // this is not logging anything to the console
+          //console.log("lat", latitude); // this is not logging anything to the console
+          //console.log(longitude); // this is not logging anything to the console
           setViewport({ ...viewport, latitude, longitude });
           setUserPosition({ latitude, longitude });
         },
@@ -39,8 +40,15 @@ const Map = ({ classes }) => {
           // Secure Origin issue.
           console.log(failure);
         },
-        { timeout: 10000 }
+        { timeout: 10000, enableHighAccuracy: true }
       );
+    }
+  };
+
+  const handleMapClick = ({ lngLat, leftButton }) => {
+    if (!leftButton) return;
+    if (!state.draft) {
+      dispatch({ type: "CREATE_DRAFT" });
     }
   };
 
@@ -52,6 +60,7 @@ const Map = ({ classes }) => {
         mapStyle="mapbox://styles/mapbox/streets-v9"
         mapboxApiAccessToken="pk.eyJ1Ijoic29yaW5jNiIsImEiOiJjanlqdm5mbzMwM25kM2N0NXlyamt5azUyIn0.9_AQS_7oO8NUIJeCbk6SkQ"
         onViewportChange={newViewport => setViewport(newViewport)}
+        onClick={handleMapClick}
         {...viewport}
       >
         <div className={classes.navigationControl}>
