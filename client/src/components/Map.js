@@ -24,8 +24,6 @@ const Map = ({ classes }) => {
     getUserPosition();
   }, []);
 
-  // console.log(GeolocateControl);
-
   const getUserPosition = () => {
     if ("geolocation" in navigator) {
       //console.log("yes geolocation"); // logs 'yes geolocation' to the console

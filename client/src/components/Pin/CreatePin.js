@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import Context from "../../context";
+import axios from "axios";
 import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
@@ -15,9 +16,23 @@ const CreatePin = ({ classes }) => {
   const [image, setImage] = useState("");
   const [content, setContent] = useState("");
 
-  const handleSubmit = e => {
+  const handleImageUpload = async () => {
+    const data = new FormData();
+    data.append("file", image);
+    data.append("upload_preset", "geoApp");
+    data.append("cloud_name", "dhsegkn40");
+    const result = await axios.post(
+      "https://api.cloudinary.com/v1_1/dhsegkn40/image/upload",
+      data
+    );
+    console.log(result);
+    return result.data.url;
+  };
+
+  const handleSubmit = async e => {
     e.preventDefault();
-    console.log({ title, image, content });
+    const url = await handleImageUpload();
+    console.log({ title, image, url, content });
   };
 
   const handleDeletePin = () => {
