@@ -51,7 +51,6 @@ const Map = ({ classes }) => {
     if (!state.draft) {
       dispatch({ type: "CREATE_DRAFT" });
     }
-    console.log(lngLat);
     const [longitude, latitude] = lngLat;
     dispatch({ type: "UPDATE_PIN_LOCATION", payload: { longitude, latitude } });
   };

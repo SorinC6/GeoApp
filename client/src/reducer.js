@@ -25,10 +25,14 @@ export default function reducer(state, { type, payload }) {
         }
       };
     case "UPDATE_PIN_LOCATION":
-      console.log("Reducer: ", payload);
       return {
         ...state,
         draft: payload
+      };
+    case "DELETE_PIN":
+      return {
+        ...state,
+        draft: null
       };
     default:
       return state;
