@@ -4,6 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import ReactMapGL, { NavigationControl, Marker } from "react-map-gl";
 import PinIcon from "./PinIcon";
 import Blog from "./Blog";
+import differentsInMinutes from "date-fns/difference_in_minutes";
 
 // import Button from "@material-ui/core/Button";
 // import Typography from "@material-ui/core/Typography";
@@ -40,22 +41,25 @@ const Map = ({ classes }) => {
 
   const getUserPosition = () => {
     if ("geolocation" in navigator) {
-      //console.log("yes geolocation"); // logs 'yes geolocation' to the console
       navigator.geolocation.getCurrentPosition(
         position => {
           const { latitude, longitude } = position.coords;
-          //console.log("lat", latitude); // this is not logging anything to the console
-          //console.log(longitude); // this is not logging anything to the console
           setViewport({ ...viewport, latitude, longitude });
           setUserPosition({ latitude, longitude });
         },
         failure => {
-          // Secure Origin issue.
           console.log(failure);
         },
         { timeout: 10000, enableHighAccuracy: true }
       );
     }
+  };
+
+  const highlightNewPin = pin => {
+    const isNewPin =
+      differentsInMinutes(Date.now(), Number(pin.createdAt)) <= 300;
+
+    return isNewPin ? "hotpink" : "blue";
   };
 
   const handleMapClick = ({ lngLat, leftButton }) => {
@@ -115,7 +119,7 @@ const Map = ({ classes }) => {
               offsetLeft={-19}
               offsetTop={-37}
             >
-              <PinIcon size={40} color="darkred" />
+              <PinIcon size={40} color={highlightNewPin(pin)} />
             </Marker>
           );
         })}
