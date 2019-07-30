@@ -12,6 +12,7 @@ import DeleteIcon from "@material-ui/icons/DeleteTwoTone";
 
 import { useClient } from "../clientQl";
 import { GET_PINS_QUERY } from "../graphql/queries";
+import { DELETE_PIN_MUTATION } from "../graphql/mutations";
 
 const INITIAL_VIEWPORT = {
   latitude: 37.7557,
@@ -79,6 +80,15 @@ const Map = ({ classes }) => {
 
   const isAuthUser = () => {
     return state.currentUser._id === popup.author._id;
+  };
+
+  const handeDeletePin = async pin => {
+    const variables = { pinId: pin._id };
+    const data = await client.request(DELETE_PIN_MUTATION, variables);
+    const { deletedPin } = data;
+    dispatch({ type: "DELETE_PIN", payload: deletedPin });
+    setPopup(null);
+    getPins();
   };
 
   return (
@@ -158,7 +168,10 @@ const Map = ({ classes }) => {
               </Typography>
               {isAuthUser() && (
                 <Button>
-                  <DeleteIcon className={classes.deleteIcon} />
+                  <DeleteIcon
+                    className={classes.deleteIcon}
+                    onClick={() => handeDeletePin(popup)}
+                  />
                 </Button>
               )}
             </div>
