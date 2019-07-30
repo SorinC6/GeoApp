@@ -69,6 +69,7 @@ const Map = ({ classes }) => {
   };
 
   const handleMapClick = ({ lngLat, leftButton }) => {
+    setPopup(null);
     if (!leftButton) return;
     if (!state.draft) {
       dispatch({ type: "CREATE_DRAFT" });
