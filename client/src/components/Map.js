@@ -6,6 +6,8 @@ import PinIcon from "./PinIcon";
 import Blog from "./Blog";
 import differentsInMinutes from "date-fns/difference_in_minutes";
 
+import { unstable_useMediaQuery as useMediaQuery } from "@material-ui/core/useMediaQuery";
+
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import DeleteIcon from "@material-ui/icons/DeleteTwoTone";
@@ -33,6 +35,8 @@ const Map = ({ classes }) => {
   const [popup, setPopup] = useState(null);
   const { state, dispatch } = useContext(Context);
   const client = useClient();
+
+  const mobileSize = useMediaQuery("(max-width: 650px )");
 
   useEffect(() => {
     getUserPosition();
@@ -100,7 +104,7 @@ const Map = ({ classes }) => {
   };
 
   return (
-    <div className={classes.root}>
+    <div className={mobileSize ? classes.rootMobile : classes.root}>
       <ReactMapGL
         width="100vw"
         height="calc(100vh - 64px)"
@@ -108,6 +112,7 @@ const Map = ({ classes }) => {
         mapboxApiAccessToken="pk.eyJ1Ijoic29yaW5jNiIsImEiOiJjanlqdm5mbzMwM25kM2N0NXlyamt5azUyIn0.9_AQS_7oO8NUIJeCbk6SkQ"
         onViewportChange={newViewport => setViewport(newViewport)}
         onClick={handleMapClick}
+        scrollZoom={!mobileSize}
         {...viewport}
       >
         <div className={classes.navigationControl}>
