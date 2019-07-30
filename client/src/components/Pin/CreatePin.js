@@ -43,6 +43,7 @@ const CreatePin = ({ classes }) => {
       const variables = { title, image: url, content, longitude, latitude };
       const data = await client.request(CREATE_PIN_MUTATION, variables);
       const { createPin } = data;
+
       dispatch({ type: "CREATE_PIN", payload: createPin });
       handleDeletePin();
     } catch (error) {

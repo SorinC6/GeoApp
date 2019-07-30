@@ -37,6 +37,7 @@ const Map = ({ classes }) => {
 
   const getPins = async () => {
     const { getPins } = await client.request(GET_PINS_QUERY);
+    console.log(getPins);
     dispatch({ type: "GET_PINS", payload: getPins });
   };
 
