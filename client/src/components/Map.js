@@ -46,9 +46,18 @@ const Map = ({ classes }) => {
     getPins();
   }, []);
 
+  //remove popup if a pin its deleted
+  useEffect(() => {
+    const pinExists =
+      popup && state.pins.findIndex(pin => pin._id === popup._id) > -1;
+
+    if (!pinExists) {
+      setPopup(null);
+    }
+  }, [state.pins.lengts]);
+
   const getPins = async () => {
     const { getPins } = await client.request(GET_PINS_QUERY);
-    console.log(getPins);
     dispatch({ type: "GET_PINS", payload: getPins });
   };
 
