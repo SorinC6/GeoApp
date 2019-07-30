@@ -19,6 +19,7 @@ export default function reducer(state, { type, payload }) {
     case "CREATE_DRAFT":
       return {
         ...state,
+        currentPin: null,
         draft: {
           longitude: 0,
           latitude: 0
@@ -49,6 +50,34 @@ export default function reducer(state, { type, payload }) {
       return {
         ...state,
         pins: [...prevPin, newPin]
+      };
+    case "SET_PIN":
+      return {
+        ...state,
+        currentPin: payload,
+        draft: null
+      };
+    case "DELETE_PIN":
+      const deletedPin = payload;
+      const filterdPins = state.pins.filter(pin => pin._id !== deletedPin._id);
+      return {
+        ...state,
+        pins: filterdPins,
+        currentPin: null
+      };
+    case "CREATE_COMMENT":
+      const updatedCurrentPin = payload;
+      const updatePins = state.pins.map(pin => {
+        if (pin._id === updatedCurrentPin._id) {
+          return updatedCurrentPin;
+        } else {
+          return pin;
+        }
+      });
+      return {
+        ...state,
+        pins: updatePins,
+        currentPin: updatedCurrentPin
       };
     default:
       return state;

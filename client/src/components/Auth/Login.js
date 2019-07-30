@@ -26,6 +26,7 @@ const Login = ({ classes }) => {
 
   const onFailure = err => {
     console.log("Error: ", err);
+    dispatch({ type: "IS_LOGGED_IN", payload: false });
   };
 
   // const responseFacebook = response => {

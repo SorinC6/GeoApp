@@ -7,9 +7,13 @@ import Map from "@material-ui/icons/Map";
 import Typography from "@material-ui/core/Typography";
 import Signout from "../components/Auth/Signout";
 
+import { unstable_useMediaQuery as useMediaQuery } from "@material-ui/core/useMediaQuery";
+
 const Header = ({ classes }) => {
   const { state } = useContext(Context);
   const { currentUser } = state;
+  const mobileSize = useMediaQuery("(max-width: 650px )");
+
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -17,7 +21,13 @@ const Header = ({ classes }) => {
           {/* Title/logo for the app */}
           <div className={classes.grow}>
             <Map className={classes.icon} />
-            <Typography component="h1" variant="h6" color="inherit" noWrap>
+            <Typography
+              component="h1"
+              variant="h6"
+              color="inherit"
+              noWrap
+              className={mobileSize ? classes.mobile : ""}
+            >
               GeoApp
             </Typography>
           </div>
@@ -28,7 +38,12 @@ const Header = ({ classes }) => {
                 src={currentUser.picture}
                 alt={currentUser.name}
               />
-              <Typography variant="h5" color="inherit" noWrap>
+              <Typography
+                variant="h5"
+                color="inherit"
+                noWrap
+                className={mobileSize ? classes.mobile : ""}
+              >
                 {currentUser.name}
               </Typography>
             </div>
