@@ -13,7 +13,7 @@ const Login = ({ classes }) => {
   const onSuccess = async googleUser => {
     try {
       const idToken = googleUser.getAuthResponse().id_token;
-      const client = new GraphQLClient("http://localhost:4000/graphql", {
+      const client = new GraphQLClient("https://geoappin.herokuapp.com", {
         headers: { authorization: idToken }
       });
       const { me } = await client.request(ME_Query);

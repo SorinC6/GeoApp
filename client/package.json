@@ -26,6 +26,7 @@
     "subscriptions-transport-ws": "^0.9.15"
   },
   "scripts": {
+    "now-build": "react-scripts build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
