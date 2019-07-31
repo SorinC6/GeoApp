@@ -7,6 +7,7 @@ const PIN_DELETED = "PIN_DELETED";
 const PIN_UPDATE = "PIN_UPDATE";
 
 const authenticated = next => (root, args, ctx, info) => {
+  console.log(ctx.currentUser);
   if (!ctx.currentUser) {
     throw new AuthenticationError("You must be logged in");
   }
