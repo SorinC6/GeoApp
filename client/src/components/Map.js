@@ -36,12 +36,14 @@ const Map = ({ classes }) => {
   const { state, dispatch } = useContext(Context);
   const client = useClient();
 
+  
+  
   const mobileSize = useMediaQuery("(max-width: 650px )");
-
+  
   useEffect(() => {
     getUserPosition();
   }, []);
-
+  
   useEffect(() => {
     getPins();
   }, []);
